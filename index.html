@@ -357,7 +357,7 @@
 			var jsonData = {};
 			formData.forEach((value, key) => { jsonData[key] = value });
 
-			fetch('http://localhost:3000/send-email', {
+			fetch('/send-email', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
