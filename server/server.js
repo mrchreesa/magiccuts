@@ -2,10 +2,11 @@
 const express = require("express");
 const nodemailer = require("nodemailer");
 const bodyParser = require("body-parser");
-const cors = require('cors');
-const path = require('path');
+const cors = require("cors");
+const path = require("path");
 const app = express();
 const PORT = process.env.PORT || 3000;
+require("dotenv").config();
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -15,12 +16,15 @@ app.use(cors());
 
 app.use(express.static("public"));
 
+const appPassword = process.env.APP_PASSWORD;
+const emailGmail = process.env.EMAIL;
+
 // Nodemailer setup
 const transporter = nodemailer.createTransport({
 	service: "gmail", // Or your preferred email service
 	auth: {
-		user: "mrchreesa@gmail.com", // Your email address
-		pass: "lbrqhfpjzomduxuu", // Your email password
+		user: emailGmail, // Your email address
+		pass: appPassword, // Your email password
 	},
 });
 
@@ -28,10 +32,10 @@ app.post("/send-email", (req, res) => {
 	const { name, surname, email, phone, message } = req.body;
 
 	const mailOptions = {
-		from: email, // sender address
-		to: "mrchreesa@gmail.com", // receiver's email
+		from: emailGmail, // sender address
+		to: emailGmail, // receiver's email
 		subject: `New appointment request from ${name} ${surname}`,
-        text: `
+		text: `
             Name: ${name} ${surname}
             Email: ${email}
             Phone: ${phone}
@@ -47,9 +51,7 @@ app.post("/send-email", (req, res) => {
 	});
 });
 
-
-
 // Start the server
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+	console.log(`Server is running on port ${PORT}`);
 });
