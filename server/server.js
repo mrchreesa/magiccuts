@@ -58,8 +58,8 @@ app.post("/send-email", async (req, res) => {
 	});
 });
 
-// Static file serving should come LAST
-app.use(express.static("public"));
+// Serve static files from the root directory
+app.use(express.static(path.join(__dirname, "..")));
 
 // Optional: Handle all other routes (404)
 app.use("*", (req, res) => {
