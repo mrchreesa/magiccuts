@@ -19,6 +19,8 @@ app.use(express.static("public"));
 const appPassword = process.env.APP_PASSWORD;
 const emailGmail = process.env.EMAIL;
 
+console.log(appPassword, emailGmail);
+
 // Nodemailer setup
 const transporter = nodemailer.createTransport({
 	service: "gmail", // Or your preferred email service
