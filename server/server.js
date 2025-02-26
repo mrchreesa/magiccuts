@@ -35,7 +35,7 @@ const transporter = nodemailer.createTransport({
 	},
 });
 
-app.post("/send-email", (req, res) => {
+app.post("/send-email", async (req, res) => {
 	const { name, surname, email, phone, message } = req.body;
 
 	const mailOptions = {
@@ -56,6 +56,14 @@ app.post("/send-email", (req, res) => {
 		}
 		res.status(200).send("Email sent successfully!");
 	});
+});
+
+// Static file serving should come LAST
+app.use(express.static("public"));
+
+// Optional: Handle all other routes (404)
+app.use("*", (req, res) => {
+	res.status(404).send("Not Found");
 });
 
 // Start the server
